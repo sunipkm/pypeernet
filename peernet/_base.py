@@ -65,10 +65,15 @@ lib.peer_py_validate_message_type.restype = int
 
 # public methods
 
+lib.peer_strerror.argtypes = c_int,
+lib.peer_strerror.restype = c_char_p
+
 lib.peer_new.argtypes = c_char_p, c_char_p, c_char_p, c_bool
 lib.peer_new.restype = c_void_p
 
 lib.peer_name.restype = c_char_p
+
+lib.peer_silent_eviction_enabled.restype = c_bool
 
 # lib.peer_set_verbose.argtypes = None
 # lib.peer_set_verbose.restype = None
@@ -78,3 +83,36 @@ lib.peer_name.restype = c_char_p
 
 # lib.peer_python_destroy.argtypes = POINTER(c_void_p),
 # lib.peer_python_destroy.restype = None
+
+lib.peer_set_silent_eviction.argtypes = c_void_p, c_bool
+
+lib.peer_get_receiver_messages.argtypes = c_void_p, c_int
+lib.peer_get_receiver_messages.restype = c_int
+
+lib.peer_exists.argtypes = c_void_p, c_char_p
+lib.peer_exists.restype = c_bool
+
+lib.peer_set_port.argtypes = c_void_p, c_int
+lib.peer_set_port.restype = c_int
+
+lib.peer_set_evasive_retry_count.argtypes = c_void_p, c_int
+
+lib.peer_set_interface.argtypes = c_void_p, c_char_p
+
+lib.peer_set_interval.argtypes = c_void_p, c_size_t
+lib.peer_set_interval.restype = c_int
+
+lib.peer_whisper.argtypes = c_void_p, c_char_p, c_char_p, c_void_p, c_size_t
+lib.peer_whisper.restype = c_int
+
+lib.peer_whispers.argtypes = c_void_p, c_char_p, c_char_p, c_char_p
+lib.peer_whispers.restype = c_int
+
+lib.peer_shout.argtypes = c_void_p, c_char_p, c_void_p, c_size_t
+lib.peer_shout.restype = c_int
+
+lib.peer_shouts.argtypes = c_void_p, c_char_p, c_char_p
+lib.peer_shouts.restype = c_int
+
+lib.peer_get_remote_address.argtypes = c_void_p, c_char_p
+lib.peer_get_remote_address.restype = c_void_p
