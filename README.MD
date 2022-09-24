@@ -35,13 +35,14 @@ second instance to crash. Multiple such instance can be launched in multiple ter
 windows, and writing anything in one such terminal, and pressing enter will cause the
 instance to send the message to all other instances.
 
-The example starts operation by initializing the peer, and starting it:
+The example starts operation by importing the library, initializing the peer, and starting it:
 ```py
-    this = peer_new("peer_name", None, "password", true); // creates a peer named "peer_name" in the default group with password "password" and encryption enabled.
+    from peernet import peer
+    this = peer("peer_name", None, "password", True) # creates a peer named "peer_name" in the default group with password "password" and encryption enabled.
 ```
 At this point, a pre-defined callback function is registered in order to capture any peer that has connected.
 ```py
-    this.on_connect(None, on_connect_cb); // registers on_connect_callback as a callback for any peer that connects.
+    this.on_connect(None, on_connect_cb) # registers on_connect_callback as a callback for any peer that connects.
 ```
 
 The `on_connect_cb()` function has the following form:
