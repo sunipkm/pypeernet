@@ -1,5 +1,5 @@
 from __future__ import annotations
-from ctypes import CFUNCTYPE, POINTER, byref, cast, c_void_p, c_char_p, c_int, c_size_t, c_bool, cdll
+from ctypes import CFUNCTYPE, POINTER, byref, c_uint64, cast, c_void_p, c_char_p, c_int, c_size_t, c_bool, cdll
 
 import platform
 
@@ -116,3 +116,5 @@ lib.peer_shouts.restype = c_int
 
 lib.peer_get_remote_address.argtypes = c_void_p, c_char_p
 lib.peer_get_remote_address.restype = c_void_p
+
+lib.peer_version.restype = c_uint64

@@ -17,6 +17,7 @@ if __name__ == '__main__':
         print('Invocation: python %s <Peer name> [encryption]'%(sys.argv[0]))
     if argc == 3:
         encrypt = True
+    print('PeerNet version: %s'%(peer.version()))
     this = peer(sys.argv[1], None, "password", encrypt)
     this.on_connect(None, on_connect_cb)
     this.start()

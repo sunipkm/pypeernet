@@ -5,10 +5,41 @@ from ._base import *
 from weakref import ProxyType, proxy
 
 class peer:
+    """Python wrapper around PeerNet::peer class.
+
+    Provides local P2P networking between uniquely named peers,
+    using a callback-based interface.
+    
+    """
     _peer_by_handle = {}
 
     @staticmethod
+    def version()->str:
+        """Get version of PeerNet backend.
+
+        Returns:
+            str: Version in major.minor.patch format.
+        """
+        ver_num = lib.peer_version()
+        patch = ver_num % 100
+        ver_num = ver_num // 100
+        minor = ver_num % 100
+        major = ver_num // 100
+        return '%d.%d.%d'%(major, minor, patch)
+
+    @staticmethod
     def voidptr_to_str(ptr: int | None)->str:
+        """Get string from a void pointer.
+
+        Args:
+            ptr (int | None): Void pointer
+
+        Raises:
+            RuntimeError: Typecast failed.
+
+        Returns:
+            str: String at pointer.
+        """
         if ptr is None:
             return ''
         elif isinstance(ptr, int):
@@ -78,7 +109,6 @@ class peer:
         self._on_message_cbs = {}
 
     def __del__(self):
-        print('%s> Quitting.'%(self.name()))
         lib.peer_py_destroy(byref(self._handle))
         del peer._peer_by_handle[self._peer_ptr]
         del self._on_connect_cbs
@@ -800,7 +830,6 @@ class peer:
             raise RuntimeError('%s> Could not get interface for %s: Error %s (%d)'%(self.name(), name, self.strerror(self.errno()), -self.errno()))
         return out
 
-    
 
     
     
