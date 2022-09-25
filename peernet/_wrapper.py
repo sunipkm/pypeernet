@@ -201,12 +201,12 @@ class peer:
             raise RuntimeError('Invalid handle.')
         return lib.peer_py_errno(self._handle)
 
-    def on_connect(self, name: str | None, fcn):
+    def on_connect(self, name: str | None, fcn : function | LIBPEER_CALLBACK_FUNC_TYPE):
         """Register callback function to execute when remote peer connects.
 
         Args:
             name (str | None): Peer name, or None for all peers.
-            fcn (_type_): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
+            fcn (function | LIBPEER_CALLBACK_FUNC_TYPE): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
 
         Raises:
             RuntimeError: Invalid handle.
@@ -269,7 +269,7 @@ class peer:
 
         Args:
             name (str | None): Peer name, or None for all peers.
-            fcn (_type_): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
+            fcn (function | LIBPEER_CALLBACK_FUNC_TYPE): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
 
         Raises:
             RuntimeError: Invalid handle.
@@ -332,7 +332,7 @@ class peer:
 
         Args:
             name (str | None): Peer name, or None for all peers.
-            fcn (_type_): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
+            fcn (function | LIBPEER_CALLBACK_FUNC_TYPE): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
 
         Raises:
             RuntimeError: Invalid handle.
@@ -395,7 +395,7 @@ class peer:
 
         Args:
             name (str | None): Peer name, or None for all peers.
-            fcn (_type_): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
+            fcn (function | LIBPEER_CALLBACK_FUNC_TYPE): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
 
         Raises:
             RuntimeError: Invalid handle.
@@ -459,7 +459,7 @@ class peer:
         Args:
             name (str): Peer name.
             message_type (str): Message type from peer.
-            fcn (_type_): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
+            fcn (function | LIBPEER_CALLBACK_FUNC_TYPE): Callback function of with argtype: handle, c_char_p (message_type), c_size_t (message_type_len), c_char_p (remote_name), c_size_t (remote_name_len), c_void_p (remote_data), c_size_t (remote_data_len) 
 
         Raises:
             RuntimeError: Invalid handle.
