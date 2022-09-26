@@ -14,7 +14,7 @@ class peer:
     _peer_by_handle = {}
 
     @staticmethod
-    def version()->str:
+    def apiversion()->str:
         """Get version of PeerNet backend.
 
         Returns:
@@ -26,6 +26,26 @@ class peer:
         minor = ver_num % 100
         major = ver_num // 100
         return '%d.%d.%d'%(major, minor, patch)
+
+    @staticmethod
+    def version(api='c')->str:
+        """Get version of PyPeerNet or PeerNet backend.
+
+        Args:
+            api (str, optional): API of which version is requested. Can be 'py' or 'c'. Defaults to 'c'.
+
+        Raises:
+            RuntimeError: Invalid query string.
+
+        Returns:
+            str: Version string in major.minor.patch format.
+        """
+        if api not in ['py', 'c']:
+            raise RuntimeError('%s is not a valid query string.'%(api))
+        if api == 'py':
+            return '1.0.1'
+        elif api == 'c':
+            return peer.apiversion()
 
     @staticmethod
     def voidptr_to_str(ptr: int | None)->str:
