@@ -700,7 +700,7 @@ class peer:
         
         rc = lib.peer_whisper(self._handle, _peer, _message_type, _data, _datalen)
         if rc:
-            raise RuntimeError('%s> Could not send message (%s) to %s: Error %s (%d)'%(self.name(), message_type, name, self.strerror(rc), rc))
+            raise RuntimeError('%s> Could not send message (%s) to %s: Error %s (%d)'%(self.name(), message_type, name, self.strerror(self.errno()), -self.errno()))
 
     def whispers(self, message_type: str, name: str, data: str):
         """Whisper a string message of message_type to remote peer.
@@ -738,7 +738,7 @@ class peer:
         
         rc = lib.peer_whispers(self._handle, _peer, _message_type, data.encode('utf-8'))
         if rc:
-            raise RuntimeError('%s> Could not send message (%s) to %s: Error %s (%d)'%(self.name(), message_type, name, self.strerror(rc), rc))
+            raise RuntimeError('%s> Could not send message (%s) to %s: Error %s (%d)'%(self.name(), message_type, name, self.strerror(self.errno()), -self.errno()))
 
     def shout(self, message_type: str, data: bytearray):
         """Shout a raw message of message_type to group.
@@ -772,7 +772,7 @@ class peer:
         
         rc = lib.peer_shout(self._handle, _message_type, _data, _datalen)
         if rc:
-            raise RuntimeError('%s> Could not send message (%s) to group: Error %s (%d)'%(self.name(), message_type, self.strerror(rc), rc))
+            raise RuntimeError('%s> Could not send message (%s) to group: Error %s (%d)'%(self.name(), message_type, self.strerror(self.errno()), -self.errno()))
 
     def shouts(self, message_type: str, data: str):
         """Shout a string message of message_type to the group.
@@ -801,7 +801,7 @@ class peer:
         
         rc = lib.peer_shouts(self._handle, _message_type, data.encode('utf-8'))
         if rc:
-            raise RuntimeError('%s> Could not send message (%s) to group: Error %s (%d)'%(self.name(), message_type, self.strerror(rc), rc))
+            raise RuntimeError('%s> Could not send message (%s) to group: Error %s (%d)'%(self.name(), message_type, self.strerror(self.errno()), -self.errno()))
 
     def get_remote_address(self, name: str)->str:
         """Get remote address of peer.
