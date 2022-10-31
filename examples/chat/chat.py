@@ -1,5 +1,10 @@
 from peernet import peer
 import sys
+import platform
+
+exit_sep = 'Ctrl + D'
+if platform.system().lower() == 'windows':
+    exit_sep = 'Ctrl + C'
 
 class LanChat(peer):
     def __init__(self, name: str, password: str = 'group_passwd'):
@@ -9,7 +14,7 @@ class LanChat(peer):
     def do_on_message(self, name: str):
         def on_message_cb(handle, message_type, message_type_len, remote_name, remote_name_len, remote_data, remote_data_len):
             message = peer.voidptr_to_str(remote_data)
-            print('\n\n%s> %s\n\n%s (Ctrl + D to exit)> '%(remote_name.decode('utf-8'), message, self.name()), end = '')
+            print('\n\n%s> %s\n\n%s (%s to exit)> '%(remote_name.decode('utf-8'), message, self.name(), exit_sep), end = '')
         self.on_message(name, "CHAT", on_message_cb)
     
     def do_on_connect(self):
@@ -32,7 +37,7 @@ if __name__ == '__main__':
     this.start()
     while True:
         try:
-            message = input('%s (Ctrl + D to exit)> '%(this.name()))
+            message = input('%s (%s to exit)> '%(this.name(), exit_sep))
         except EOFError:
             break
         print()

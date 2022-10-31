@@ -3,6 +3,21 @@ from ctypes import c_char, c_uint8
 from ._base import *
 from weakref import ProxyType, proxy
 
+def peer_apiversion()->str:
+    """Get version of PeerNet backend.
+
+    Returns:
+        str: Version in major.minor.patch format.
+    """
+    ver_num = lib.peer_version()
+    patch = ver_num % 100
+    ver_num = ver_num // 100
+    minor = ver_num % 100
+    major = ver_num // 100
+    return '%d.%d.%d'%(major, minor, patch)
+
+assert (peer_apiversion() >= '3.0.0'), 'Expecting PeerNet API version 3.0.0 and above.'
+
 class peer:
     """Python wrapper around PeerNet::peer class.
 
@@ -19,12 +34,7 @@ class peer:
         Returns:
             str: Version in major.minor.patch format.
         """
-        ver_num = lib.peer_version()
-        patch = ver_num % 100
-        ver_num = ver_num // 100
-        minor = ver_num % 100
-        major = ver_num // 100
-        return '%d.%d.%d'%(major, minor, patch)
+        return peer_apiversion()
 
     @staticmethod
     def version(api='c')->str:
