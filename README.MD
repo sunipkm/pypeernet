@@ -11,7 +11,7 @@ PeerNet is developed by Sunip K. Mukherjee. This project uses the MPL v2 license
 Contributions/ideas are welcome.
 
 ## Pre-requisites
-This version of pyPeerNet is based off PeerNet v2.1.4. PeerNet, and its prerequisites are required
+This version of pyPeerNet is based off PeerNet v3.0.0. PeerNet, and its prerequisites are required
 to use pyPeerNet. Refer to the [PeerNet readme](https://github.com/sunipkm/peernet/blob/master/README.MD)
 to install PeerNet.
 
