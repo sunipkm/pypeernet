@@ -1,6 +1,5 @@
 from __future__ import annotations
 from ctypes import c_char, c_uint8
-from email import message
 from ._base import *
 from weakref import ProxyType, proxy
 
@@ -43,7 +42,7 @@ class peer:
         if api not in ['py', 'c']:
             raise RuntimeError('%s is not a valid query string.'%(api))
         if api == 'py':
-            return '1.0.1'
+            return '2.0.0'
         elif api == 'c':
             return peer.apiversion()
 
@@ -850,8 +849,48 @@ class peer:
             raise RuntimeError('%s> Could not get interface for %s: Error %s (%d)'%(self.name(), name, self.strerror(self.errno()), -self.errno()))
         return out
 
+    def set_endpoint(self, name: str):
+        """By default, PeerNet binds to an ephemeral TCP port and broadcasts the
+        local host name using UDP beacons. When this method is called, PeerNet will
+        use gossip discovery instead of UDP beacons. The gossip service MUST BE set
+        up separately using {@link peer_gossip_bind} and {@link peer_gossip_connect}.
+        Note that, the endpoint MUST be valid for both bind and connect operations.
+        inproc://, ipc://, or tcp:// transports (for tcp://, use an IP address that is
+        meaningful to remote as well as local peers). Returns 0 if the bind was
+        successful, -1 otherwise.
 
+        Args:
+            name (str): Format string.
+        """
+        if self._handle is None:
+            raise RuntimeError('Invalid handle.')
+        rc = lib.peer_set_endpoint(self._handle, name.encode('utf-8'))
+        if rc:
+            raise RuntimeError('Could not set endpoint %s'%(name))
     
-    
+    def gossip_bind(self, name: str):
+        """Set up gossip discovery of other peers. At least one peer in the cluster
+        must bind to a well-known gossip endpoint, so that other peers can connect to it.
+        Note that, gossip endpoints are completely distinct from PeerNet node endpoints,
+        and should not overlap (they can use the same transport). For details of the
+        gossip network design, see the CZMQ zgossip class.
 
-    
+        Args:
+            name (str): Format string, followed by inputs.
+        """
+        if self._handle is None:
+            raise RuntimeError('Invalid handle.')
+        lib.peer_gossip_bind(self._handle, name.encode('utf-8'))
+
+    def gossip_connect(self, name: str):
+        """Set up gossip discovery of other peers. A peer may connect to multiple other
+        peers, for redundancy paths. For details of the gossip network design, see the CZMQ
+        zgossip class.
+
+        Args:
+            name (str): Format string, followed by inputs.
+        """
+        if self._handle is None:
+            raise RuntimeError('Invalid handle.')
+        lib.peer_gossip_connect(self._handle, name.encode('utf-8'))
+     

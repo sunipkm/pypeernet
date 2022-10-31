@@ -10,6 +10,8 @@ if os_type.lower() == 'linux':
     ext = '.so'
 elif os_type.lower() == 'darwin':
     ext = '.dylib'
+elif os_type.lower() == 'windows':
+    ext = '.dll'
 else:
     raise RuntimeError('Platform %s not known.'%(os_type))
 
@@ -118,3 +120,12 @@ lib.peer_get_remote_address.argtypes = c_void_p, c_char_p
 lib.peer_get_remote_address.restype = c_void_p
 
 lib.peer_version.restype = c_uint64
+
+lib.peer_set_interface.argtypes = c_void_p, c_char_p
+lib.peer_set_interface.restype = c_int
+
+lib.peer_gossip_bind.argtypes = c_void_p, c_char_p
+lib.peer_gossip_bind.restype = None
+
+lib.peer_gossip_connect.argtypes = c_void_p, c_char_p
+lib.peer_gossip_connect.restype = None
